@@ -1,0 +1,385 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Background */
+body {
+    background-color: #ffd1dc; 
+    background-image: radial-gradient(#ffb6c1 1px, transparent 1px);
+    background-size: 20px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Short Stack', cursive;
+    overflow-y: auto; 
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+/* Floating Hearts Background */
+.floating-hearts {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+}
+.floating-hearts span {
+    position: absolute; bottom: -50px; font-size: 1.5rem;
+    animation: floatUp 8s linear infinite; opacity: 0;
+}
+.floating-hearts span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.floating-hearts span:nth-child(2) { left: 30%; animation-delay: 2s; font-size: 2rem;}
+.floating-hearts span:nth-child(3) { left: 50%; animation-delay: 4s; }
+.floating-hearts span:nth-child(4) { left: 70%; animation-delay: 1s; font-size: 1.8rem;}
+.floating-hearts span:nth-child(5) { left: 90%; animation-delay: 3s; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    20% { opacity: 0.8; }
+    100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+}
+
+/* =========================================
+   ANG BAGONG FLAT ENVELOPE
+   ========================================= */
+.envelope-wrapper {
+    position: relative;
+    width: 350px; /* Pinalapad ng konti para kamukha ng image */
+    height: 200px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.5s ease;
+}
+
+.header-text h1 {
+    font-family: 'Dancing Script', cursive, sans-serif;
+    color: #c2185b;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.footer-text {
+    text-align: center;
+    color: #555;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ang puting papel na nakausli sa ilalim */
+.paper-behind {
+    position: absolute;
+    bottom: -15px; 
+    left: 10px;
+    width: calc(100% - 20px);
+    height: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 1;
+    transition: transform 0.6s ease;
+}
+
+/* Kulay ng sobre */
+.envelope-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #e91e63; /* Kulay pink */
+    border-radius: 12px;
+    z-index: 2;
+    overflow: hidden; /* Para hindi lumabas ang triangles */
+}
+
+/* Gumawa ng triangles para magmukhang sobre */
+.triangle-left {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #d81b60; /* Medyo mas dark pink */
+    clip-path: polygon(0 0, 50% 50%, 0 100%);
+}
+.triangle-right {
+    position: absolute; top: 0; right: 0; width: 100%; height: 100%;
+    background-color: #d81b60;
+    clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+}
+.triangle-bottom {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #e91e63; /* Gitnang kulay */
+    clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+}
+.triangle-top {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #d81b60;
+    clip-path: polygon(0 0, 100% 0, 50% 50%);
+    z-index: 3;
+    transform-origin: top;
+    transition: transform 0.6s ease;
+}
+
+/* Ang Putong Bilog na may Puso (Wax Seal) */
+.wax-seal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px; height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4; /* Pinakataas */
+    transition: all 0.4s ease;
+}
+
+.wax-seal span {
+    color: #c2185b; /* Kulay ng puso */
+    font-size: 28px;
+    margin-top: 2px;
+}
+
+/* --- ANIMATION KAPAG BINUKSAN --- */
+.envelope-wrapper.open .triangle-top {
+    transform: rotateX(180deg); /* Bubukas pataas ang takip */
+    z-index: 1;
+}
+.envelope-wrapper.open .paper-behind {
+    transform: translateY(-100px); /* Aangat ang papel */
+}
+.envelope-wrapper.open .wax-seal {
+    opacity: 0; /* Mawawala ang seal */
+    transform: translate(-50%, -50%) scale(0);
+}
+
+
+/* =========================================
+   IKALAWANG BAHAGI: ANG BIRTHDAY CARD
+   ========================================= */
+.birthday-card {
+    position: relative; 
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+    padding-bottom: 50px;
+    z-index: 10;
+}
+
+.birthday-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Naka-hang na Litrato */
+.hanging-photo {
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+.string {
+    position: absolute;
+    top: -50px;
+    width: 2px;
+    height: 60px;
+    background-color: #888;
+    z-index: -1;
+}
+.string.left { left: 30%; transform: rotate(-10deg); }
+.string.right { right: 30%; transform: rotate(10deg); }
+
+.photo-frame {
+    background: #fff;
+    padding: 15px 30px;
+    border-radius: 15px;
+    border: 2px solid #f8bbd0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    border-bottom: 5px dashed #f8bbd0;
+    overflow: hidden;
+}
+
+.cute-characters { 
+    font-size: 1.8rem; 
+    letter-spacing: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    height: 35px;
+}
+
+.bounce-item {
+    display: inline-block;
+    animation: bounceEmoji 1.5s ease-in-out infinite;
+}
+
+.small-text { 
+    font-size: 0.8rem; 
+    color: #888; 
+    margin-top: 8px; 
+    font-family: 'Short Stack', cursive; 
+}
+
+.fade-text {
+    animation: fadeText 2s ease-in-out infinite alternate;
+}
+
+@keyframes bounceEmoji {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes fadeText {
+    0% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* Malaking Text at Cake */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.main-title {
+    font-family: 'Dancing Script', cursive, sans-serif;
+    color: #d81b60;
+    font-size: 3rem;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+.cake { font-size: 2.5rem; }
+
+/* Bouquet ng Bulaklak */
+.flower-bouquet {
+    position: relative;
+    width: 200px;
+    height: 220px;
+    margin-bottom: 20px;
+}
+.stem {
+    position: absolute;
+    bottom: 40px;
+    width: 4px;
+    background-color: #2e7d32;
+    transform-origin: bottom;
+}
+.s1 { left: 100px; height: 150px; transform: rotate(-20deg); }
+.s2 { left: 100px; height: 130px; transform: rotate(-5deg); }
+.s3 { left: 100px; height: 140px; transform: rotate(10deg); }
+.s4 { left: 100px; height: 120px; transform: rotate(25deg); }
+
+.flower { position: absolute; width: 40px; height: 40px; }
+.f1 { top: 10px; left: 40px; }
+.f2 { top: 40px; left: 110px; }
+.f3 { top: 50px; left: 25px; }
+.f4 { top: 80px; left: 130px; }
+
+.petal {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.f1 .petal { background-color: #ff4081; }
+.f2 .petal { background-color: #ff9800; }
+.f3 .petal { background-color: #ba68c8; }
+.f4 .petal { background-color: #f06292; }
+
+.p1 { top: 0; left: 10px; }
+.p2 { top: 10px; left: 0; }
+.p3 { top: 10px; left: 20px; }
+.p4 { top: 20px; left: 10px; }
+
+.center {
+    position: absolute;
+    top: 10px; left: 10px;
+    width: 12px; height: 12px;
+    background-color: #ffeb3b;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.vase {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 60px;
+    background-color: #d4a373;
+    border-radius: 5px 5px 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border: 2px solid #b5835a;
+    z-index: 2;
+}
+
+/* Mahabang Liham */
+.bottom-letter {
+    background-color: #fff;
+    width: 100%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: left;
+    border: 1px solid #f8bbd0;
+    position: relative;
+    z-index: 2;
+}
+.dear-text {
+    font-family: 'Dancing Script', cursive, sans-serif;
+    color: #d81b60;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+.message-text {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.8;
+    font-family: 'Short Stack', cursive;
+    margin-bottom: 20px;
+    min-height: 120px;
+}
+.cute-drawing {
+    text-align: center;
+    font-size: 2rem;
+    background: #fdfbf7;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+    margin-bottom: 20px;
+}
+.cute-drawing span {
+    font-size: 0.7rem;
+    color: #888;
+    display: block;
+    margin-top: 5px;
+}
+.signature {
+    font-family: 'Dancing Script', cursive, sans-serif;
+    color: #d81b60;
+    font-size: 1.6rem;
+    text-align: right;
+}

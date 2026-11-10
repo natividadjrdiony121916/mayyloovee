@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Short+Stack&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Maliliit na lumulutang na puso sa background -->
+    <div class="floating-hearts">
+        <span>❤️</span><span>💖</span><span>💕</span><span>💗</span><span>❤️</span>
+    </div>
+
+    <!-- ANG ENVELOPE (Unang view) -->
+    <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="header-text">
+            <h1>For My Love 💌</h1>
+        </div>
+        
+        <div class="envelope">
+            <!-- Ang puting papel sa ilalim -->
+            <div class="paper-behind"></div>
+            
+            <!-- Ang pangunahing katawan ng sobre -->
+            <div class="envelope-body">
+                <!-- Ang mga kulay na triangles para magmukhang sobre -->
+                <div class="triangle-left"></div>
+                <div class="triangle-right"></div>
+                <div class="triangle-top"></div>
+                <div class="triangle-bottom"></div>
+            </div>
+            
+            <!-- Ang puting bilog na may puso -->
+            <div class="wax-seal" id="heartBtn">
+                <span>♥</span>
+            </div>
+        </div>
+
+        <div class="footer-text">
+            <p>A little letter is waiting for you...</p>
+            <p>Tap the envelope to open it 📩</p>
+        </div>
+    </div>
+
+    <!-- ANG SURPRISE CARD -->
+    <div class="birthday-card hidden" id="birthdayCard">
+        
+        <div class="hanging-photo">
+            <div class="string left"></div>
+            <div class="string right"></div>
+            <div class="photo-frame">
+                <div class="cute-characters">
+                    <span class="bounce-item" style="animation-delay: 0s;">🐻</span>
+                    <span class="bounce-item" style="animation-delay: 0.2s;">🐼</span>
+                    <span class="bounce-item" style="animation-delay: 0.4s;">🍓</span>
+                    <span class="bounce-item" style="animation-delay: 0.6s;">🍰</span>
+                </div>
+                <p class="small-text fade-text">Today is all about you</p>
+            </div>
+        </div>
+
+        <div class="title-container">
+            <h1 class="main-title">Happy Birthday,<br>My Love</h1>
+            <div class="cake">🍰</div>
+        </div>
+
+        <div class="flower-bouquet">
+            <div class="flower f1"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="center c"></div></div>
+            <div class="flower f2"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="center c"></div></div>
+            <div class="flower f3"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="center c"></div></div>
+            <div class="flower f4"><div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div><div class="center c"></div></div>
+            <div class="stem s1"></div>
+            <div class="stem s2"></div>
+            <div class="stem s3"></div>
+            <div class="stem s4"></div>
+            <div class="vase">🤍</div>
+        </div>
+
+        <div class="bottom-letter">
+            <h3 class="dear-text">My Dearest,</h3>
+            <p class="message-text" id="typewriter"></p>
+            
+            <div class="cute-drawing">
+                🐻 💤 🐼<br>
+                <span>My favorite place is right next to you.</span>
+            </div>
+
+            <div class="signature">
+                Forever yours, ❤️
+            </div>
+        </div>
+
+        <audio id="bgMusic" loop>
+            <source src="your-song.mp3" type="audio/mpeg">
+        </audio>
+
+    </div>
+
+    <script>
+        const wrapper = document.getElementById('envelopeWrapper');
+        const birthdayCard = document.getElementById('birthdayCard');
+        const typewriter = document.getElementById('typewriter');
+        const bgMusic = document.getElementById('bgMusic');
+        
+        const textToType = "Today the world celebrates the day you were born. But for me, it's just another reminder of how lucky I am to have you. You are my peace, my home, and my favorite hello. I love you more than words can say.";
+
+        wrapper.addEventListener('click', () => {
+            wrapper.classList.add('open'); 
+            bgMusic.play().catch(e => console.log("Walang music file."));
+
+            setTimeout(() => {
+                wrapper.style.display = 'none'; 
+                birthdayCard.classList.remove('hidden'); 
+                window.scrollTo(0, 0); 
+                
+                setTimeout(() => {
+                    birthdayCard.classList.add('show'); 
+                    typeText();
+                }, 50);
+                
+            }, 1000); // 1 segundo bago magpalit sa card
+        });
+
+        let i = 0;
+        function typeText() {
+            if (i < textToType.length) {
+                typewriter.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeText, 40);
+            }
+        }
+    </script>
+
+</body>
+</html>
